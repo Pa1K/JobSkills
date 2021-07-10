@@ -210,6 +210,69 @@ server.port=8081
 
 Common Application Properties: https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html
 --------------------
+Unit 4
+Spring Data JPA: The Data Tier
+
+What is JPA
+
+JPA - Java Persistence API
+Java Classes
+Relational Database
+Object Relational Mapping (ORM)
+Class <-> Table
+--------------------
+Adding Spring Data JPA -
+
+Web module
+SQL -> JPA module, Apache Derby module (Apache Derby DB with embedded support)
+
+Q: Find how to interact with external DB like Oracle SQL Developer, PostgreSQL
+
+pom.xml
+   # spring jpa
+  <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-jpa</artifactId>
+  </dependency>
+  
+    # spring mvc
+    <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+  </dependency>
+  
+   # apache derby DB
+   <dependency>
+    <groupId>org.apache.derby</groupId>
+    <artifactId>derby</artifactId>
+    <scope>runtime</scope>
+  </dependency>
+--------------------
+Creating a Spring Data JPA Repository -
+
+Topic.java:
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Topic{
+  @Id
+  private String id;
+}
+
+TopicRepository.java:
+import org.springframework.data.repository.CrudRepository;
+
+public interface TopicRepository extends CrudRepository<Topic,String>{
+
+}
+
+Topic is the type we dealing with
+primary key id is String, so we gave
+CrudRepository<Topic,String>
+--------------------
+Making Crud Operations with Repository - 
+
 
 
 
