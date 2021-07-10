@@ -170,6 +170,28 @@ Starting a Spring Boot App
 Configuration
 --------------------
 Using Spring Initializr -
-start.spring.io
+http://start.spring.io
+--------------------
+Using Spring Boot CLI -
+go into bin folder of the extracted directory
+./spring
+vi app.groovy
+@RestController
+class AppCtrl{
+  @RequestMapping("/")
+  String app(){
+    "Hello World"
+  }
+}
+
+./spring run app.groovy
+--------------------
+Using the STS IDE -
+right click in STS -> New -> Spring Starter Project
+provide details
+finish
+--------------------
+
+
 
 
