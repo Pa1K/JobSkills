@@ -1,1 +1,87 @@
+pom.xml - here we mention dependencies
+<parent>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-parent</artifactId>
+  <version>1.4.2.RELEASE</version>
+</parent>
+
+<dependencies>
+  <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+  </dependency>
+</dependencies>
+
+<properties>
+  <java.version>1.8</java.version>
+</properties>
+@SpringBootApplication - says this is spring boot app
+
+inside main method
+SpringApplication.run(<classNamewhichAnnotatedWithSpringBootApplication>.class, <argsPassedtoMain>);
+
+Starting Spring Boot -
+Sets up default configuration
+Starts Spring application context
+Performs class path scan
+Starts Tomcat server
+
+Controller -
+has info abt 
+wt URL access triggers it?
+Wt method to run when accessed?
+
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RestController
+@RequestMapping("/hello")
+The @RequestMapping maps only to the GET method by default. To map to other HTTP methods, we will have to specify it in the annotation.
+
+Embedded Tomcat Server -
+Convience
+Servlet Container config is now application config
+Standalone application
+Useful for microservices architecture
+
+Spring MVC Controller -
+Client --> Spring MVC --> Controller classes
+
+REST API we'll build -
+Course API 
+Resources: Topic, Course, Lesson
+A Topic can have multiple Courses and 
+a Course can consist of muliple Lessons.
+
+Topics:
+GET     /topics     Gets all topics
+GET     /topics/id  Gets the topic
+POST    /topics     Create new topic
+PUT     /topics/id  Updates the topic
+DELETE  /topics/id  Deletes the topic
+
+import org.springframework.stereotype.Service;
+@Service
+
+In Controller, we use Service class as dependency
+so create variable and inject
+
+create variable:
+private TopicService topicService;
+
+to inject dependency add @Autowired on topic the service variable:
+import org.springframework.beans.factory.annotation;
+@Autowired
+private TopicService topicService;
+
+@RequestMapping("/topics")
+public List<Topic> getAllTopics(){
+  return topicService.getAllTopics();
+}
+
+
+
+
+
+
 
