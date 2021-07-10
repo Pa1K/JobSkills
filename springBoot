@@ -352,7 +352,44 @@ public class CourseService{
   }
 }
 --------------------
+Unit 5
+Deployment and monitoring
 
+Packaging and running a Spring Boot app - 
+mvn clean install
+java -jar target/<jarName>.jar
 
+if we want to package as war
+then in pom.xml, change value of packaging to war
+<packaging>war</packaging>
+
+mvn clean install
+--------------------
+Spring Boot Actuator - 
+
+pom.xml:
+
+# spring actuator
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+  </dependency>
+  
+GET http://localhost:8080/health
+
+to change port of actuator
+in application.properties 
+management.port=9001
+
+Building a RESTful Web Service with Spring Boot Actuator: https://spring.io/guides/gs/actuator-service/
+--------------------
+Wrap Up -
+Summary:
+Unit 1    Starting a Spring Boot App
+Unit 2    Spring MVC
+Unit 3    Booting Spring Boot
+Unit 4    Spring Data JPA
+Unit 5    App Execution and Actuator
+--------------------
 
 
