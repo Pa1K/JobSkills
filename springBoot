@@ -272,6 +272,42 @@ primary key id is String, so we gave
 CrudRepository<Topic,String>
 --------------------
 Making Crud Operations with Repository - 
+TopicService.java:
+
+@Autowired
+private TopicRepository topicRepository;
+
+public void addTopic(Topic topic){
+  topicRepository.save(topic);
+}
+
+public Topic getTopic(String id){
+  return topicRepository.findOne(id);
+}
+
+
+public List<Topic> getAllTopics(){
+  List<Topic> topics = new ArrayList<>();
+  topicRepository.findAll().forEach(topics::add);
+  return topics;
+}
+
+
+public void updateTopic(Topic topic,String id){
+  return topicRepository.save(topic);
+}
+
+public void deleteTopic(String id){
+   topicRepository.delete(id);
+}
+
+The framework sees the embedded Derby database in the classpath and assumes that 
+derby is the DB to connect to, No connection info necessary.
+--------------------
+
+
+
+
 
 
 
