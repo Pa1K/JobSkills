@@ -1,3 +1,15 @@
+project structure -
+ProjectName
+  src/main/java  
+  src/main/resources
+  src/test/java
+  src/test/resources
+  JRE System Library
+  Maven Depedencies
+  src
+  target
+  pom.xml
+--------------------
 pom.xml - here we mention dependencies
 <parent>
   <groupId>org.springframework.boot</groupId>
@@ -190,6 +202,13 @@ Using the STS IDE -
 right click in STS -> New -> Spring Starter Project
 provide details
 finish
+--------------------
+Customising Spring Boot Using application.properties -
+under src/main/resources, create application.properties file
+
+server.port=8081
+
+Common Application Properties: https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html
 --------------------
 
 
