@@ -100,7 +100,20 @@ pom.xml - here we mention dependencies
 <properties>
   <java.version>1.8</java.version>
 </properties>
+--------------------
+Have you realized that you have not done any of the below steps that you typically perform for any other Spring applications?
+Adding dependent jar files in the classpath
+Writing XML files for Spring configuration
+Building the application
 
+Adding Spring dependencies and configuring Spring beans taken care of by,
+Spring Boot starters
+@SpringBootApplication
+Building the application is taken care of by Maven. 
+Spring Initializr provides a ready-to-use Maven pom.xml to package the application as Jar or War. 
+Open the pom.xml file in your demo and observe the build tag given below.
+<build></build>
+--------------------
 import org.springframework.boot.SpringApplication;
 @SpringBootApplication - says this is spring boot app
 
