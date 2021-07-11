@@ -117,6 +117,23 @@ Open the pom.xml file in your demo and observe the build tag given below.
 import org.springframework.boot.SpringApplication;
 @SpringBootApplication - says this is spring boot app
 
+@SpringBootApplication is equivalent to declare @ComponentScan, @Configuration, and @EnableAutoConfiguration annotations with their defaults.
+@SpringBootApplication = @Configuration + @EnableAutoConfiguration + @ComponentScan
+
+@Configuration - This annotation tags a class as a configuration class. This annotation is equivalent to defining beans in an XML configuration file.
+@EnableAutoConfiguration - 
+This annotation auto-configures all the beans based on classpath dependencies.  
+For example, since you have included spring-core dependency in your classpath via spring-boot-starter, 
+the auto-configuration assumes that you are creating a Spring core application and set up Spring accordingly. 
+@ComponentScan - 
+This annotation scans the base package (the package under which this class resides) and 
+creates beans of other annotated java components like components, configurations, and services. 
+This is equivalent to Spring's XML configuration <context:component-scan/>.  
+
+We can override the base package value by providing the scanBasePackages attribute as below:
+@SpringBootApplication(scanBasePackages={"<package1>","<package2>", ...})
+
+
 inside main method
 SpringApplication.run(<classNamewhichAnnotatedWithSpringBootApplication>.class, <argsPassedtoMain>);
 
@@ -126,6 +143,14 @@ Starts Spring application context
 Performs class path scan
 Starts Tomcat server
 
+Spring core without Spring Boot -
+The required version of Spring core jars need to be added to the classpath
+@Configuration, @ComponentScan, @Component, and @Service annotations are used
+
+Spring core with Spring Boot -
+Spring Boot starters take care of loading the dependent jars with the default version
+@SpringBootApplication, @Component, and @Service annotations are used
+--------------------
 Controller -
 has info abt 
 wt URL access triggers it?
