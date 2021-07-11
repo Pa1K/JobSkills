@@ -1,4 +1,77 @@
-project structure -
+Spring MVC Application Structure:
+
+Java Resources
+	src
+		api
+		controller
+		entity
+		exception
+		model
+		repository
+		resources
+		service
+		test
+		utility
+	WebContent
+		META-INF
+		resources
+		WEB-INF
+			imgs
+			js
+			lib
+			view
+				jsp pages
+			applicationContext.xml
+			dispatcher-servlet.xml
+			web.xml
+			
+
+in web.xml
+<servlet>
+	<servlet-name>dispatcher</servlet-name>
+	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+</servlet>
+--------------------
+Characteristics: Description
+
+Architecture: MVC with 3-tier architecture
+Technologies: Java, Spring Core, Spring Data JPA, Spring MVC, JSP, HTML
+Database: MySQL
+Application configuration: XML files and annotations
+Application properties: Properties file
+Deployment: Apache Tomcat
+Build system: Manual
+--------------------
+challenges with Spring MVC:
+Application Server
+Dependencies
+Configurations
+--------------------
+The above issues can overcome using SpringBoot
+
+Spring Boot -
+1.opinionated
+2.customizable
+
+Spring Boot components
+  Starter - Manages the dependencies of the Spring-based projects by combining the group of common or related dependencies.  Spring Boot forms the opinions based on starters.
+  Auto configures  - Detects and automatically configures the Spring applications based on the added dependencies.
+  CLI - Command Line Interface to start, test, and stop Spring Boot applications from the command prompt (Not discussed in this course)
+  Actuator - Enables enterprise features and gives an insight into the application.
+--------------------
+Developing IRS with Spring Boot -
+1. impl service layer with Spring core
+2. impl repository layer with Spring Data JPA
+3. impl web layer with Spring MVC
+4. Log the error msgs using Logback
+5. Perform unit testing using Junit and Mockito
+6. Load env specific configs using Profiles
+7. Config app properties using YAML
+8. Secure the app using Spring Security
+9. Build REST web service and consume it
+10. Monitor the health of app using Actuators
+--------------------
+spring boot project structure -
 ProjectName
   src/main/java  
   src/main/resources
