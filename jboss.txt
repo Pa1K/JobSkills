@@ -1,0 +1,140 @@
+Accenture
+
+Application Developer
+
+ Must have Skills : Platform Engineering
+ Good to Have Skills :  Java Enterprise Edition
+ 
+ 
+ JBoss, EJB
+ 
+ 
+ JBoss EAP application server and 
+ Tomcat installation, configuration and administration Experience with Apache Webserver 22/23/24 
+ Strong Experience in JBoss EAP 7/6x/5x/4x and Tomcat 8x/6x/4x Application Servers Administration 
+ Strong Experience in Apache webserver/JBoss EWS and mod jk configuration Involved in Various Administration tasks like Installation Configuration Deployment Monitoring Performance tuning Troubleshooting Maintenance
+ 
+ 
+ 
+ WildFly is a new name of JBoss application server starting from version 8. 
+ 
+ directory strucutre
+ modules
+ bundles
+ domain
+ standalone
+ appclient
+ bin
+ docs
+ welcome-content
+ 
+ Jboss EAP:
+ Wildfly core 10.1.2
+ Undertow - web server
+ JGroups, Infinispan - helps in clustering in jboss
+ Iron Jacamar - EJB level clustering
+ Narayana(Trxn) - helps to do transactions
+ Active MQ Artemis - messaging inside jboss
+ JBoss Logging 
+ HAL (admin console) - web console
+ jboss security
+ Picket Box (valut)
+ Netty - http based protocol connector
+ 
+Standalone mode
+Domain mode
+ 
+Standalone mode
+ one instance of jboss
+ 
+Domain mode
+  one jboss server can manage another jboss servers
+  
+
+Opensource and freeware
+faster footprint
+no license only subscription
+
+ Logging levels - 
+FATAL
+ERROR
+WARN
+INFO
+DEBUG
+
+JBoss clustering is on top of JGroups toolkit which helps to create, delete, membership detection, notification, etc. in the cluster.
+  
+unzip jboss-as-7.1.1.Final.zip
+
+http://server1:9990/admin-console
+
+how to access admin console:
+The user must be created under “ManagementRealm” to have console operational. To create the user, you can go to bin folder and execute add-user.sh script.
+
+start jboss in standalone mode:
+Go to the bin folder where JBoss is installed and start with the following command.
+./standalone.sh
+
+How to increase Java Heap Memory in JBoss 7?
+Heap Memory can be increased in a respective conf file. To increase memory for standalone;
+Go to the bin folder
+Edit the standalone.conf file and look for “JAVA_OPTS=” argument line
+The default configuration will have a minimum of 64 MB and a maximum of 512 MB. You can increase to the desired value.
+Xms – specify the minimum heap size 
+Xmx – specify the maximum heap size
+In a similar way, you can adjust the memory for a domain in domain.conf file
+
+
+What is the difference between standalone and domain mode?
+Standalone mode is single JVM process where every JBoss server has its configuration. If you just need one JVM or development environment, then standalone would be perfect.
+Domain mode may have multiple servers where all configuration is managed centralized and often used in production environment.
+
+Can you create a cluster in standalone mode?
+Yes, clustering is possible in standalone mode. However, an application must be deployed on each server/JVM in standalone mode.
+
+What is difference between <validate-on-match> and <background-validation>?
+<validate-on-match> validate the database connection every time, and if a connection is not valid, it will write a warning in the logs.
+Having “validate-on-match” configured may have a little high load on the database as it may create lots of requests.
+<background-validation> validate the connection periodically based on what frequency is configured for “background-validation-millis”. The default configuration is set to zero means disabled.
+Having “ background-validation” set to true will create fewer database connections and it’s side-effects would be not detecting immediately if dead connections.
+
+How can you deploy an application?
+Admin Console – you can deploy the necessary application files through the administration console.
+Auto-deploy – leverage file system deployment scanner to auto-deploy files from the deployments folder.
+Automation – use automation tool/ant/scripting to deploy an application.
+
+ What are the important types available for marker file deployment?
+.dodeploy – instruct to deploy
+.deployed – indicate the file is deployed
+.pending – deployment is still pending
+.undeployed – confirmation that application is undeployed
+.failed – deployment is failed for some reason
+.skipdeploy – instruct JBoss to ignore the files for auto-deployment
+
+What marker file type is required to instruct JBoss to deploy?
+.dodeploy file suffix is needed for JBoss to deploy or redeploy an application.
+e.g myfirstapplication.war.dpdeploy
+
+What are the file types you can deploy in JBoss?
+You can deploy almost any kind of Java/J2EE application, and it supports the following file format.
+WAR – Web application archive
+SAR – Service archive
+JAR – Java Archive
+EAR – Enterprise application archive
+
+
+What does mgmt-user.properties contain?
+All admin console users and passwords (encrypted) are stored in mgmt.-user.properties file file.
+The mgmt-users.properties files are located in the standalone or domain configuration folder.
+/domain/configuration/mgmt-users.properties.
+/standalone/configuration/mgmt-users.properties.
+
+What module needed to integrate Apache with JBoss?
+There are two modules you can use to connect JBoss with Apache.
+mod_proxy
+mod_jk
+
+Ref:
+https://geekflare.com/jboss-interview-questions-answers/
+https://blog.dbi-services.com/jboss-eap-7-cluster-in-standalone-mode/
+https://docs.jboss.org/author/display/AS7/Application%20deployment.html
