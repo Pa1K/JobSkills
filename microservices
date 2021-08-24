@@ -1,0 +1,88 @@
+
+Microservices - level 1 - Service Communication and Discovery
+https://www.youtube.com/watch?v=F3uJyeAyv5g&list=PLqq-6Pq4lTTZSKAFG6aCDVDP86Qx4lNas
+RestTemplate restTemplate = new RestTemplate();
+restTemplate.getForObject("AnotherMicroServiceURL",classNameinWhichResponseNeedToBeModeled);
+
+for WebClient, we need to use spring Dependency webflux
+WebClient.Builder builder = WebClient.builder();
+
+@Bean
+public WebClient.Builder getWebClientBuilder(){
+	return  WebClient.builder();
+}
+
+@Autowired 
+private WebClient.Builder webClientBuilder;
+
+webClientBuilder.build().get().uri("AnotherMicroServiceURL").retrieve().bodyToMono(Movie.class).block();
+
+
+
+Service Discovery
+Client side discovery
+Server side discovery
+
+Spring Cloud uses Client side discovery
+
+Technology : Eureka
+Netflix OSS -
+Eureka
+Ribbon
+Hysterix
+Zuul
+
+Discovery server - Eureka server
+Eureka clients , service where microservices are running
+Client 
+
+Start up a Eureka server
+Have microservices register (publish) using Eureka client
+Have microservices locate (consume) using Eureka client
+
+Add Eureka Server as Spring Dependency
+Eureka Server - spring-cloud-netflix Eureka Server
+Eureka Discovery - Service discovery using spring-cloud-netflix and Eureka
+
+Eureka Server - spring-cloud-netflix Eureka Server
+spring-cloud-starter-netlfix-eureka-server
+
+@EnableEurekaServer along with @SpringBootApplication
+
+default port of eureka server is 8761
+
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false
+
+
+add spring-cloud-starter-netflix-eureka-client as dependency to microservices/spring boot application
+
+spring.application.name=movie-info-service in application.properties
+so name is assigned to microservice which we can see in Spring Eureka
+ 
+@EnableEurekaClient along with @SpringBootApplication, so springboot application/microservice becomes eureka client and gets registered in eureka server.
+
+@Bean
+@LoadBalanced
+private RestTemplate getRestTemplate(){
+return new RestTemplate();
+}
+
+@Autowired
+private RestTemplate restTemplate;
+
+//restTemplate.getForObject("AnotherMicroServiceURL",classNameinWhichResponseNeedToBeModeled); - we hardcoded microservice url
+restTemplate.getForObject("https://microserviceName/context/"+pathvariables,ClassTowhichResponseNeedtobeModeledInto);
+
+@LoadBalanced -- wt's loadbalacing mechanism used in spring Eureka
+
+@Autowired
+private DiscoveryClient discoveryClient;
+we get this from eureka client Dependency
+
+using DiscoveryClient, we can do customizations to Spring Eureka
+
+
+How fault Tolreance works?
+if any of the microservice is down, discovery server sends hearbeats/pings to each service to check it's health in regular intervals
+if discovery server down, client picks from cache and works
