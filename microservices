@@ -86,3 +86,157 @@ using DiscoveryClient, we can do customizations to Spring Eureka
 How fault Tolreance works?
 if any of the microservice is down, discovery server sends hearbeats/pings to each service to check it's health in regular intervals
 if discovery server down, client picks from cache and works
+--------------------
+
+service discovery - eureka
+zipkin, hystrix
+
+Client side loadbalacing - ribbon
+
+
+Microservices level 2 Java Brains - Fault Tolerance and Resilence
+https://www.youtube.com/watch?v=X7n4BUEWOoE&list=PLqq-6Pq4lTTbXZY_elyGv7IkKrfkSrX5e
+
+
+https://www.themoviedb.org/documentation/api/discover
+https://www.themoviedb.org/settings/api
+
+
+
+Understand challenges with availablity
+Making microservices resilient and fault tolerant
+
+https://www.themoviedb.org/settings/api
+
+@Value("${api.key}")
+private String apiKey;
+api.key is mentioned in application.properties
+
+
+How do make it resilient?
+ Issues with microservices
+  Scenario 1: a microservice instance goes down
+  Solution : run multiple instances
+  
+  Scenario 2: A microservice instance is slow
+  suppose a service is slow
+  	How threads work in a web server
+  	 when a request comes to a web server a thread is created to serve that request and thread is closed when webserver responded back.
+  	 if a request comes to web server, while serving first request, second thread will be created for new request.
+  	 like this thread count increases if web server doesn't respond faster, which causes more utilisation of the cpu.
+  	 sol: Timeouts
+  	 
+Setting timeouts on Spring RestTemplate
+HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();  
+clientHttpRequestFactory.setTimeOut(3000);
+3000 ms i.e 3sec
+return new RestTemplate(clientHttpRequestFactory);
+
+if requests coming rate is higher than request timeout rate then we end up in same issue of threads piling up.
+
+Circuit breaker pattern -
+Detect stng is wrong
+Take temporary steps to avoid the situation getting worse
+Deactivate the problem component so that it doesn't affect the downstream components
+
+Circuit breaker parameters -
+When does the circuit trip?
+Last n requests to consider for the decision
+How many of those should fail?
+Timeout duration
+
+When does the circuit un-trip?
+How long after a circuit trip to try again?
+
+For a complete list of config params (for a circuit breaker like Hystrix) refer:
+https://github.com/Netflix/Hystrix/wiki/Configuration
+
+
+What to do when a Circuit breaks -
+I need to stop calling a microservice
+But what do i do when a request comes in for that microservice
+then we need a fallback
+- throw an error
+- return a fallback "default" response
+- Save previous responses (cache) and use that when possible
+
+Why Circuit Breakers -
+failing fast
+fallback functionality
+Automatic Recovery
+
+Circuit Breaker Pattern -
+When to break Circuit | What to do when Circuit Breaks | When to resume requests
+
+Hystrix -
+Open source library originally created by Netflix
+Implements Circuit Breaker pattern so you don't have to
+Give it the Configuration params and it does the work
+Works well with Spring Boot
+
+Adding hystrix to a Spring Boot microservice -
+Add the maven spring-cloud-starter-netflix-hystrix dependency
+Add @EnableCircuitBreaker to the application class 
+Add @HystrixCommand to methods that need circuit breakers
+Configure Hystrix behavior
+
+@RequestMapping("/{userId}")
+@HystrixCommand(fallbackMethod="getFallbackCatalog")
+public List<CatalogItem> getCatalog(@PathVariable("userId") String userId){
+
+}
+
+public List<CatalogItem> getFallbackCatalog(@PathVariable("userId") String userId){
+
+}
+
+How does hystrix works -
+API class has @HystrixCommand and method
+API class is wrapped into Proxy class
+If everything is working fine then we check API class only
+if there is some issue then for fallback we redirect request to Proxy class, which takes care of which method (fallback) need to be called
+
+Problem with hystrix proxy -
+write seperate fallback each service we are calling , so that we send accurate data for the working ones
+and fallback data for failing service
+
+if we are calling methods annotated with @HystrixCommand from the same class, then we get error.
+we need to call, @HystrixCommand methods from diff class.
+
+Refactoring for granualar fallback -
+if we are calling methods annotated with @HystrixCommand from the same class, then we get error.
+we need to call, @HystrixCommand methods from diff class.
+
+Configuring hystrix parameters -
+@HystrixCommand(fallbackMethod="getFallbackUserRating",
+			 	commandProperties= {
+			 	@HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="2000"),
+			 	@HystrixProperty(name="circuitBreaker.requestVolumeThreshold", value="5"),
+			 	@HystrixProperty(name="circuitBreaker.errorThresholdPercentage", value="50"),
+			 	@HystrixProperty(name="circuitBreaker.sleepWindowInMilliseconds", value="5000"),
+			 	})
+public UserRating getUserRating(@PathVariable("userId") String userId){}
+
+hystrix dashboard -
+add spring-cloud-starter-netflix-hystrix-dashboard, spring-boot-starter-actuator as dependencies
+Annotate class with @EnableHystrixDashboard
+in application.properties, add management.endpoints.web.exposure.include=hystrix.stream
+http://localhost:8081/hystrix
+Hystrix stream: http://localhost:8081/actuator/hystrix.stream
+
+The bulkhead pattern -
+@HystrixCommand(fallbackMethod="getFallbackCatalogItem",
+				threadPoolKey="movieInfoPool",
+				threadPoolProperties={
+					@HystrixProperty(name="coreSize",value=20),
+					@HystrixProperty(name="maxQueueSize",value="10")},
+				)
+summary -
+Understanding possible causes of failure in microservices
+Threads and Pools and impacts of slow microservices
+Timeouts and it's limitations
+circuitBreaker pattern
+Hystrix concepts and implementation
+bulkhead pattern
+
+--------
