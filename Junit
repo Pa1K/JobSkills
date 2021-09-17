@@ -1,0 +1,130 @@
+https://www.youtube.com/watch?v=2E3WqYupx7c&list=PLqq-6Pq4lTTa4ad5JISViSb2FVG8Vwa4o
+
+
+Understand JUnit 5 Architecture
+Learn how to setup a JUnit project
+Write tests and learn the JUnit API
+(Assertions, Life cycles, Execution control etc)
+Learn how to handle scenarios
+(Exception handling, Conditional execution, Repeated tests etc)
+
+JUnit 4 -
+more than 10yrs old
+Not up to date with newer testing pattern
+Not up to date with Java language features
+Monolithic Architecture
+Bugs and feature requests pile up
+
+Junit 5 Architecture -
+Platform
+jupiter
+vintage
+ext(3rd party)
+
+JUnit Jupiter -
+New programming model in JUnit
+Extension Model
+primarily used 
+
+exercise - Create a maven project and add JUnit 5 dependencies
+dependencies -
+junit-jupiter-api: API for writing tests using JUnit jupiter
+junit-jupiter-engine: Implementation of the TestEngine API for JUnit jupiter
+junit-vintage-engine: A thin layer on top of JUnit 4 to allow running vintage tests
+
+@Test
+
+Create an instance of the class under test
+setup inputs
+Execute the code you want to test
+verify the result is wt you expect
+
+exercise - Create a test for the add method
+
+AssetEquals -
+assetEquals(expected, actual)
+Asserts that expected and actual are equal
+
+assertArrayEquals(expectedArray, actualArray)
+verifies each item in the arrays are equal in the right position
+
+assetIterableEquals(expectedArray, actualArray)
+verifies each item in the iterable are equal in the corresponding positions
+
+Exercise -
+Add a computeCircleArea method to MathUtils using Test Driven Development methodology 
+(write test first, then code)
+
+maven-surefire-plugin - maven plugin
+to run junit tests using maven commands
+
+
+Test life cycle -
+initialize before anything in the class runs: @BeforeAll
+initialize before each method: @BeforeEach
+test case
+teardown after each method: @AfterEach
+teardown after all methods are done: @AfterAll
+
+Exercise - Create a new instance of MathUtils before each test method using @BeforeEach
+Test Instance 
+New instance created per test - @TestInstance(TestInstance.Lifecycle.PER_METHOD) - this is default behavior of Junit
+so keeping this annotation on top class doesn't t make any diff
+
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+single instance is created for the class
+in this case, no need to use static keyword for methods annotated with @BeforeAll, @AfterAll
+
+Annotations to scale your tests -
+@DisplayName
+@Disabled
+
+Conditional Execution -
+@EnabledOnOs(OS.LINUX)
+@EnabledOnJre(JRE.JAVA_11)
+@EnabledIf
+@EnabledIfSystemProperty
+@EnabledIfEnvironmentVariable
+
+Handling external factors / Assumptions -
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+
+
+Nested test classes -
+@Nested
+@DisplayName("add method")
+class AddTest {
+	
+	@Test
+	@Display("when adding two positive numers")
+	void testAddPositive(){}
+	
+	@Test
+	@DisplayName("when adding two positive numers")
+	void testAddNeagative(){}
+}
+
+AssertAll -
+assetAll(
+	() -> assetEquals(expected, actual),
+	() -> assetEquals(expected, actual),
+	() -> assetEquals(expected, actual),
+)
+
+
+Lazy assert messages - using supplier for assert msgs
+we can use lambad expression for msg, instead of string 
+
+@RepeatedTest(noOfTimesWeWantToRepeat)
+used inplace of @Test
+if we want to do specific test on each repetition
+then pass RepetitionInfo object as an argument in test method
+
+
+Tagging tests with @Tag -
+@Tag("Math")
+@Tag(value = "{Math,Circle}")
+
+Using TestInfo and TestReporter -
+dependency injection
+testReporter.publishEntry("Running "+testInfo.getDisplayName()+" with tags "+testInfo.getTags());
