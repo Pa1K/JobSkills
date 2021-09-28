@@ -1,0 +1,288 @@
+Telusko | Spring Boot Tutorials | Full Course: https://www.youtube.com/watch?v=35EQXmHKZYs
+
+
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter</artifactId>
+</dependency>
+this dependency provides dependency injection
+    
+annotate class with @Component or similar annotations for bean creation in the spring container
+
+by default, spring uses singleton design pattern i.e singleton scope for the object
+which means even if create multiple objects single instance only maintained
+
+to create object everytime, we did getBean(), then we need to mention scope  on top of the class with following
+@Scope(value="prototype")
+and we need to call getBean() method then only new object gets created where as incase of singleton scope, spring does creation of new  object even if we don't mention getBean()
+
+@Autowired is used to do dependency injection
+By default, @Autowired search by Type i.e class name with startingletter in lowercase
+e.g if class name is Address , search by type i.e address 
+
+we can use @Qualifier to search by name
+@Qualifier("name")
+
+@Component("name")
+bean gets created with mentioned name instead of classname with startingletter in lowercase
+
+now we want to search by name
+so along with @Autowired and the following
+@Qualifer("name")
+
+
+
+
+Web App using Spring Boot --
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+for web applications
+
+<dependency>
+	<groupId>org.apache.tomcat</groupId>
+	<artifactId>tomcat-jasper</artifactId>
+	<version>9.0.53</version>
+</dependency>
+to work with JSP pages
+and don't add @ResponseBody on method
+
+in Controller,
+return "home"; //to declare like this we need to add prefix and suffix in application.properties
+
+spring.mvc.view.prefix=/pages/ - to mention where doc is present
+spring.mvc.view.suffix=.jsp - to mention extension of the doc
+
+
+		
+WebApp using Spring Boot Accepting Client Data --
+
+@RequestMapping("homeWithName")
+	public String homeWithName(HttpServletRequest httpServletRequest) {
+		
+		HttpSession httpSession = httpServletRequest.getSession();
+		String name = httpServletRequest.getParameter("name");
+		System.out.println("Hi "+name);
+		httpSession.setAttribute("name", name);
+		return "home";
+	}
+
+
+
+WebApp using Spring Boot ModelandView --
+if parameter name we are passing in url and the one in the code same, then no need to use any annotation
+but if there is diff b.w them we need to use annotation @RequestParam("paramNameasInURL")
+
+@RequestMapping("homeWithNameUsingModelAndView")
+	public ModelAndView homeWithName(@RequestParam("name") String myName) {
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("name",myName);
+		mv.setViewName("home");
+		System.out.println("Hi "+myName);
+		
+		return mv;
+	}
+	
+
+WebApp using SpringBoot Model Object --
+@RequestMapping("homeWithObjectUsingModelAndView")
+	public ModelAndView homeWithObject(User user) {
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("user",user);
+		mv.setViewName("home");
+		System.out.println("Hi "+user);
+		
+		return mv;
+}
+
+http://localhost:8080/users/homeWithObjectUsingModelAndView?id=1&name=pavan&password=secret
+object details 1,pavan,secret
+
+
+SpringBoot JPA MVC H2 Example --
+Web, JPA, H2
+
+spring.h2.console.enabled=true
+
+Parameter 0 of constructor in com.pavan.restapi.model.Employee required a bean of type 'int' that could not be found.
+https://stackoverflow.com/questions/52841620/parameter-0-of-constructor-in-required-a-bean-of-type-java-lang-string-that-co
+Add a public default constructor in your class
+
+2021-09-26 15:08:13.424  WARN 66280 --- [  restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - 
+cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: 
+Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: 
+Invocation of init method failed; 
+nested exception is org.springframework.jdbc.datasource.init.ScriptStatementFailedException: 
+Failed to execute SQL script statement #1 of URL [file:/Users/pavankari/Documents/workspace-spring-tool-suite-4-4.6.0.RELEASE/SpringBootRestAPI/target/classes/data.sql]: 
+insert into EMPLOYEE values (1,'pavan','pass1'); 
+nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "EMPLOYEE" not found; SQL statement:
+
+org.springframework.beans.factory.BeanCreationException: 
+Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: 
+Invocation of init method failed; 
+
+spring.jpa.defer-datasource-initialization=true in application.properties resolved issue
+https://roytuts.com/integrate-h2-in-memory-database-with-spring-boot/
+
+@RequestMapping("/addEmployee")
+public String addEmployee(Employee employee){
+	employeeRepo.save(employee);
+	return "home";
+}
+
+
+SpringBoot JPA MVC H2 Example Part 2 --
+Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "bhavani" not found; SQL statement:
+insert into EMPLOYEE values (2,"bhavani","java") [42122-200]
+use single quotes instead of double quotes in queries
+
+CrudRepository 
+<S extends T> S save(S entity);
+<S extends T> Iterable<S> saveAll(Iterable<S> entities);
+
+boolean existsById(ID id);
+
+Optional<T> findById(ID id);
+Iterable<T> findAllById(Iterable<ID> ids);
+Iterable<T> findAll();
+
+long count();
+
+void deleteById(ID id);
+void deleteAllById(Iterable<? extends ID> ids);
+void delete(T entity);
+void deleteAll(Iterable<? extends T> entities);
+void deleteAll();
+
+
+
+SpringBoot JPA MVC H2 Example Part 3 --
+Query Methods
+
+findByFieldName
+
+System.out.println(employeeRepo.findByTech("java"));
+System.out.println(employeeRepo.findByIdGreaterThan(2));
+System.out.println(employeeRepo.findByIdLessThan(2));
+System.out.println(employeeRepo.findByIdEquals(2));
+System.out.println(employeeRepo.findByTechSorted("java"));
+		
+to write complex query we can write our own query like below
+correct:
+@Query("from Employee where tech=?1 order by name")
+List<Employee> findByTechSorted(String tech);
+
+wrong1:
+@Query("from employee where tech=?1 order by name")
+	List<Employee> findByTechSorted(String tech);
+}
+Caused by: org.hibernate.hql.internal.ast.QuerySyntaxException: employee is not mapped
+
+wrong2:
+@Query("from EMPLOYEE where tech=?1 order by name")
+	List<Employee> findByTechSorted(String tech);
+}
+Caused by: org.hibernate.hql.internal.ast.QuerySyntaxException: EMPLOYEE is not mapped
+
+Employee has to be entity class name
+
+
+SpringBoot JPA MVC H2 Example Part 4 --
+REST 
+
+@RequestMapping("/employees/{eid}")
+@ResponseBody
+public String getEmployeeId2(@PathVariable("eid") int id) {
+
+
+SpringBoot JPA MVC H2 Example Part 5 --
+REST
+
+@RequestMapping("/employeesE")
+@ResponseBody
+public List<Employee> getAllEmployees3() {
+		 return employeeRepo.findAll();
+}
+jackson-core jar is responsible for conversion of objects to json
+
+
+SpringBoot JPA MVC H2 Example Part 6 --
+REST
+explained usage of postman for rest api testing
+
+
+SpringBoot JPA MVC H2 Example Part 7 --
+REST
+content negotiation
+	<dependency>
+    	<groupId>com.fasterxml.jackson.dataformat</groupId>
+    	<artifactId>jackson-dataformat-xml</artifactId>
+    	<version>2.12.5</version>
+	</dependency>
+add jackson-dataformat-xml in pom, for generating data in xml
+	
+@RequestMapping(path = "/employeesE", produces = {"application/xml"})
+@ResponseBody
+public List<Employee> getAllEmployees3() {
+	return employeeRepo.findAll();
+}
+produces = {"application/xml"} -  now method returns only in application/xml
+
+
+SpringBoot JPA MVC H2 Example Part 8 --
+REST
+@RequestMapping(path="/employeesE",method=RequestMethod.POST)
+	@ResponseBody
+	public Employee addEmployee2(@RequestBody Employee employee){
+		Employee emp =  employeeRepo.save(employee);
+		 return emp;
+}
+
+this method accepts both xml/json
+if we want to restrict the input to any format add them in consumes={"application/xml"}
+	
+	
+SpringBoot JPA MVC H2 Example Part 9 --
+REST PUT DELETE
+
+
+JpaRepository --
+List<T> findAll();
+List<T> findAll(Sort sort);
+List<T> findAllById(Iterable<ID> ids);
+<S extends T> List<S> findAll(Example<S> example);
+<S extends T> List<S> findAll(Example<S> example, Sort sort);
+
+<S extends T> List<S> saveAll(Iterable<S> entities);
+<S extends T> S saveAndFlush(S entity);
+<S extends T> List<S> saveAllAndFlush(Iterable<S> entities);
+
+void flush();
+
+void deleteAllInBatch(Iterable<T> entities);
+void deleteAllByIdInBatch(Iterable<ID> ids);
+void deleteAllInBatch();
+
+T getOne(ID id);
+T getById(ID id);
+
+SpringBoot Data REST Example --
+without RestController, we can implement REST API using Spring Data REST
+dependency modules - H2, JPA, Rest Repositories
+@RepositoryRestResource(collectionResourceRel = "addresses", path = "addresses")
+on top of repository class
+
+
+@RepositoryRestResource
+@RepositoryRestResource(collectionResourceRel = "addresses", path = "addresses")
+@RepositoryRestResource(collectionResourceRel = "addresses")
+@RepositoryRestResource(path = "addresses")
+
+how to ensure autogenerate starts from some offset , not from 1?
+#to generate sequence from speific number
+@SequenceGenerator(name="mysequence", initialValue=7)
+@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="mysequence")
+private Long pincode;
