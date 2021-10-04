@@ -1,0 +1,24 @@
+https://sqlpad.io/questions/
+
+order by col dec - gives highest one on the top
+order by col - gives lowest one on the top
+
+limit 3 - gives first 3 rows
+
+where picture is null - condition/filter using col value
+
+EXTRACT(YEAR FROM payment_ts) as year
+EXTRACT(MONTH FROM payment_ts) as mon
+payment_ts   | timestamp with time zone
+
+group by year,mon; -- for aggregate functions we use group by colnamesWithCommaSeperated
+in aggregate function we will mention colName on which we want to perform operation
+
+The following query gives revnue of for each month
+SELECT EXTRACT(YEAR FROM payment_ts) as year ,EXTRACT(MONTH FROM payment_ts) as mon, sum(amount) as rev
+FROM payment
+group by year,mon;
+
+EXTRACT(DATE from payment_ts) - timestamp with time zone units "date" not recognized
+DATE(payment_ts) as dt 
+
