@@ -1,0 +1,535 @@
+/**
+ * Ref:
+ * https://www.youtube.com/watch?v=PlbupGCBV6w&list=PLsyeobzWxl7rrvgG7MLNIMSTzVCDZZcT4&ab_channel=Telusko
+*/
+
+/**
+ * VS -
+write code
+show output
+debug code
+ */
+
+/** Node JS - to run code */
+
+
+let num = 2 + 2 ;
+console.log(num);
+console.log(num+3);
+
+let num = 5;
+/**
+ * when using reference second time, no need to mention let
+ */
+let username = 'pavan';
+console.log(username);
+
+
+//constants
+let radius = 5;
+//let pi = 3.14; 
+/**
+ * as pi value is constant , instead of let,we will use const
+ */
+const pi = 3.14;
+let area;
+
+area = pi * radius * radius;
+console.log(area);
+
+
+//datatypes
+let data = 8 ;  //number
+let user = 'pavan'; //string
+/**
+ * Data types - Primitive and Object
+ * Primitive - Number, String, Boolean, Null, Undefined, Symbol
+ * wtever is non-primitive is Object
+ */
+console.log(typeof data);
+let num1 = 10_00_000;
+let num2 = 10_000_00;
+console.log(num1 == num2); //true
+let num3 = 5/0; // Infinity
+let num4 = -3/0; // -Infinity
+console.log(Number.MAX_VALUE);
+
+let bigNumer = 123456789010301224242424;
+//add n at the end, so precision maintained 
+let bigNumer2 = 123456789010301224242424n;
+console.log(bigNumer == bigNumer2);
+
+console.log(5/"pavan"); //NaN
+console.log(typeof (5/"pavan")); //number
+
+
+//datatypes 2 - string
+let user1 = 'pavan';
+console.log(user1);
+
+let firstName = 'pavan';
+let lastName = 'kari';
+let user2 = firstName +" "+ lastName;
+console.log(user2);
+
+let user3 = "pavan bhavani 'kari'";
+let user4 = "pavan bhavani \"kari\""; // \ is escape character
+let user5 = "siva \nkari";
+let user6 = "sri\tnu \nkarr\bi";
+
+//boolean
+let boolean = 5 > 6 ;
+console.log(boolean);
+console.log(typeof boolean);
+
+//null
+let nullUser = null;
+console.log(nullUser); //null
+console.log(typeof nullUser); //object
+
+//undefined
+let undefinedUser;
+console.log(undefinedUser); //undefined
+console.log(typeof undefinedUser); //undefined
+
+
+//type conversion, type coercion
+/**
+ * number to string
+ * string to number
+ * number to boolean
+ */
+let num5 = 6;
+console.log(num5, typeof num5); //6, number
+let num6 = String(6); //converting number to string
+console.log(num6, typeof num6); // 6, string
+
+let num7 = '123';
+console.log(num7, typeof num7); //123, string
+let num8 = Number('123'); //converting string to number
+console.log(num8, typeof num8); //123, number
+/**the above two conversions are explicit conversions */
+
+let x1 = parseInt('123 pavan'); 
+console.log(x1, typeof x1); //123 'number'
+let x5 = parseInt('123.45 pavan');
+console.log(x5, typeof x5);  //123 'number'
+let x2 = parseInt('n123 1123 pavan');
+console.log(x2, typeof x2); //NaN 'number'
+let x3 = parseFloat('123 pavan');
+console.log(x3, typeof x3); //123 'number'
+let x4 = parseFloat('123.45 pavan');
+console.log(x4, typeof x4); //123.45 'number'
+
+
+console.log(Boolean(6)); //true
+console.log(Boolean(0)); //false
+console.log(Boolean(-4)); //true
+console.log(Boolean('pavan')); //true
+console.log(Boolean('')); //false
+console.log(Boolean(null)); //false
+console.log(Boolean(undefined)) //false
+console.log(Boolean(NaN)); //false
+
+
+
+
+
+let x;
+console.log(x,typeof x); //undefined 'undefined'
+x=8;
+console.log(x,typeof x); //8 'number'
+x=x+"";
+console.log(x,typeof x); //8 string
+x=x-2;
+console.log(x,typeof x); //6 'number'
+x=!x;
+console.log(x,typeof x); //false 'boolean'
+
+x=8;
+console.log(x,typeof x); //8 'number'
+x=x+"";
+console.log(x,typeof x); //8 string
+x=x+2;
+console.log(x,typeof x); //82 string
+x = +x + 8  //+x converts the string to number
+console.log(x,typeof x); //90 'number'
+
+
+//arithemetic operators
+let num9 = 5;
+let num10 = 2;
+console.log(num9/num10); //2.5
+console.log(num9%num10); //1
+
+let num11 = true;
+let num12 = true;
+let num13 = false;
+console.log(num11 + num12); //2
+console.log(num11 + num13); //1
+console.log(num13); //false
+console.log(num13 + num13); //0
+
+console.log(Math.pow(2,4)); // 16
+console.log(2 ** 4);
+
+
+//relational operators
+/** >,>=,<,<=,==,=== */
+console.log("Pen">'Book'); //true
+console.log("pen" > 'Book') //true
+console.log('a' > 'Book'); // true
+console.log('A' > 'Book'); //false
+/** ascii values are compared
+ * first Capital letters, then small letters
+ * so small letter have higher value than capital letters
+ */
+console.log('pen'>'pencil'); //false
+console.log('2'>3); //false , coercion
+console.log('2' > 1); //true 
+
+console.log('2ny'>1); //false
+console.log('2ny'<1); //false
+console.log('pen'>4) //false
+console.log('pen'<4) //false
+console.log('pen' == 4 ); //false
+
+console.log(3 == 3);//true
+console.log('3' == 3); //true, coercion
+console.log('3' === 3); //false
+console.log('' == false); //true
+console.log('' === false); //false
+/** ===, checks content as well as type 
+ * == checks content only
+*/
+console.log('pen' == 'Pen'); //false
+console.log('pen' == 'pen'); //true
+
+console.log('' == false); //true
+console.log('' === false); //false
+console.log('' == true); //false
+console.log('' === true); //false
+
+
+//logicalOperators
+/** AND(&&), OR(||), NOT(!) */
+let x=7,y=2,z=8;
+let result = x<y || x<z; //true
+let result2 = x<y && x<z; //false
+let n = !result
+console.log(result,n,result2,!result2); //true,false,false,true
+ 
+
+//ConditionalStatement
+//if-else
+if(3>4)
+    console.log("3 is greater than 4");
+else
+console.log("4 is greater than 3");
+
+//if-else if-else
+if(num%2 == 0)
+    console.log("num is even");
+else
+    console.log("num is odd");
+
+//ternary operator
+let result3 = num%2 === 0 ?"Even":"Odd";
+
+
+//switch statement
+/**
+ * Mon - 7am
+ * Tues - Thurs - 4am
+ * Fri - 9am
+ * Sat - Sun - 8am
+ */
+let day = "Mon";
+switch (day) {
+    case 'Mon':
+        console.log('7am');
+        break;
+    case 'Tues':
+    case 'Wed':
+    case 'Thurs':
+        console.log("4am");
+        break;
+    case "Fri":
+        console.log("9am");
+        break;
+    case "Sat":
+    case "Sun":
+        console.log('8am');
+        break;
+    default:
+        console.log("it's not a day");
+        break;
+}
+
+
+//Template literal
+let num14 = 8;
+let num15 = 7;
+console.log('the addition of ${num1} and ${num2} is ${num1+num2}'); //the addition of ${num1} and ${num2} is ${num1+num2}
+console.log(`the addition of ${num1} and ${num2} is ${num1+num2}`); // the addition of 5 and 5 is 10
+
+console.log('My name is Pavan Kari');
+console.log('My name is \nPavan Kari'); 
+console.log(`My name is \nPavan Kari`);
+console.log(`My name is
+Pavan Kari`);
+/**
+ * console.log('My name is
+Pavan Kari');
+gives error
+*/
+
+
+//while loop
+/** loops -
+ * while
+ * do while
+ * for
+ */
+
+//best loop?
+/**
+ * for loop - if we know start and end point
+ * while loop - if we don't know exact number of times loop need to iterate
+ * do while - if statement need to be executed atleast once
+ */
+
+
+//Objects
+let alien = {};
+console.log(alien, typeof alien); // {}[[Prototype]]: Object 'object'
+
+let alien = { name: 'pavan', tech: 'JS'}
+console.log(alien, typeof alien); // {name: 'pavan', tech: 'JS'} 'object'
+console.log(alien.name, typeof alien.name); // pavan string
+console.log(alien["tech"], typeof alien["tech"]); //JS string
+
+let alien = { name: 'pavan', 'work exp':4}
+/** work exp we can't access using ., so we need to use ['work exp'] to fetech it's value*/
+console.log(alien['work exp']); //4
+
+let input = 'name';
+console.log(alien[input]); //when input is coming from another variable we need to use [] instead of .
+
+console.log();
+//complex Object delete property
+let alien = { name: 'pavan', tech: 'JS', 'work exp':4, laptop: { cpu: 'i7', ram: '4', brand:'asus' } };
+console.log(alien); //{name: 'pavan', tech: 'JS', work exp: 4, laptop: {…}}
+console.log(alien.laptop); //{cpu: 'i7', ram: '4', brand: 'asus'}
+console.log(alien.laptop.brand); //asus
+console.log(alien.laptop.brand.length); //4
+
+let alien2 = { name: 'pavan', tech: 'JS', 'work exp':4, laptop: { cpu: 'i7', ram: '4',brand2:'hp'} };
+console.log(alien2.laptop.brand); //undefined
+console.log(alien2.laptop.brand.length); //gives error
+console.log(alien.laptop.brand?.length); //4
+console.log(alien2.laptop.brand?.length); //undefined
+/** ? - if brand is not present give undefined instead of error*/
+
+let alien3 = { name: 'pavan', tech: 'JS', 'work exp':4, laptop2: { cpu: 'i7', ram: '4', brand3:'asus'} };
+console.log(alien3.laptop.brand?.length); //gives error as laptop not present
+console.log(alien3.laptop?.brand?.length); //gives undefined as we used laptop?
+
+delete alien.laptop;//to delete a property from the object - returns true
+
+
+// For in loop in JavaScript
+let alien3 = { name: 'pavan', tech: 'JS', 'work exp':4, laptop1: { cpu: 'i7', ram: '4', brand1:'asus'} };
+for(let p in alien3){
+console.log(p,alien3[p]);
+}
+/**
+ * name pavan
+ * tech JS
+ * work exp 4
+ * laptop1 {cpu: 'i7', ram: '4', brand1: 'asus'}
+ */
+
+for(let p in alien3.laptop1){
+     console.log(p,alien3.laptop1[p])
+}
+/**
+ * cpu i7
+ * ram 4
+ * brand1 asus
+ */
+
+
+//Functions
+function greet(){ 
+    console.log("hello"); 
+}
+greet();
+
+//function return and passing
+function greet(firstName, lastName){
+    return `Hello ${firstName} ${lastName}`;
+}
+greet('pavan','kari'); // 'Hello pavan kari'
+
+//function expression
+let add = function(num1, num2) {
+    return num1+num2;
+}
+add(4,5); //returns 9
+console.log(add);
+/**
+ƒ (num1, num2) {
+    return num1+num2;
+}
+ */
+
+
+//local-global variable, default value
+//Hoisting we will discuss later
+let username2 = 'PavanKari'; // this is global variable we can access anywhere
+function add2(num1,num2,num3) {
+    let localVariable = 4; // this is local variable can't access outside of function
+    console.log(localVariable); // 4
+    console.log(username2); // PavanKari
+    return num1+num2+num3; 
+}
+
+add2(4,5); // returns NaN as third argument is missing. default value is undefined if we don't assign
+//to overcome error, we can assign default value in function so that if we don't pass it will pick the value we define
+//if parameters matched then we get response as per parameters
+add3(4,5); //return 10
+add3(4,5,11); //return 20
+function add3(num1,num2,num3=1) {    
+    return num1+num2+num3;
+}
+console.log(localVariable); // localVariable is not defined
+
+
+//Arrow function
+/** => */
+add(4,5); //return 10
+add(4,5,11); //return 20
+let add6 = (num1,num2,num3=1) => {    
+    return num1+num2+num3;
+}
+
+//function in object i.e method
+let laptop = {
+    cpu: 'i7',
+    ram: '8GB',
+    brand: 'asus',
+    greet: function() {
+        console.log(this.cpu + this.ram + this.brand);
+    }
+}
+laptop.greet();
+
+//this keyword
+/**this represents the current object */
+
+
+// arrays and methods
+
+//Set
+/** unique elements
+ * in general, unordered list but in javascript maintains order
+ * no index
+ */
+//let vs var
+let nums = new Set();
+nums.add(1);
+nums.add(2);
+nums.add(2);
+nums.add("pavan");
+nums.add("kari");
+nums.add(true);
+console.log(nums); //prints Set(5) {1, 2, 'pavan', 'kari', true}
+
+let nums = new Set("bookkeeper");
+console.log(nums); //prints Set(6) {'b', 'o', 'k', 'e', 'p', 'r'}
+
+let nums = new Set(1,2,3,4,4,3,2,1);
+/**VM107:43 Uncaught TypeError: 1 is not iterable! */
+//prints only 2
+let nums = new Set('2','3','4','4','3','2',1); 
+nums = new Set('2','3','4','4','3','2','1');
+nums = new Set('2',3,4,4,3,2,1);
+nums = new Set('2','3',4,4,3,2,1);
+
+//Set(5) {1, 2, 'pavan', 'kari', true}
+nums.has(1); // returns true as 1 is present
+nums.has('Pavan'); //returns false as JS is case sensitive
+
+//print values
+nums.forEach(element => {
+    console.log(element);
+});
+
+for (const iterator of nums) {
+    console.log(iterator);
+}
+
+//delete(value: T): boolean;
+nums.delete(1); //returns true as 1 is deleted
+nums.delete(1); // returns false as 1 is not present
+
+//clear(): void;
+nums.clear(); //deletes all the elements in the set
+
+
+//Map 
+let map = new Map(); /** intialise map */
+map.set("pavan","Java"); /** set values */
+map.set("bhavani","SpringBoot");
+map.set("kumar","MicroServices");
+map.set(1,1);
+
+console.log(map.get("pavan")); //get value of the key
+console.log(map.keys()); //list all keys
+console.log(map.values()); // print all values
+console.log(map.has("kumar")); //check key is present or not
+
+for (let index = 0; index < map.size; index++) {
+   console.log(index);
+}
+/** not able to find key and value using index */
+
+map.forEach( (k,v) => {
+    console.log(k,v);
+});
+/** in java script, forEach of map, first parameter is value then key, 
+ * so following is better loop than earlier */
+
+map.forEach( (v,k) => {
+    console.log(k,v);
+});
+
+for (const iterator of map.keys()) {
+    console.log(iterator); //prints keys
+}
+
+for (let [k,v] of map) {
+    console.log(k,v); //prints key,values
+}
+
+for (let [v,k] of map) {
+    console.log(k,v); //prints values,keys
+}
+
+for (let [k,v] of map) {
+    console.log(k,v); //prints key,values
+}
+
+console.log(map.delete(1)); //true
+console.log(map); //prints only 3 elements, 1 is deleted
+
+map.set("pavan","core java"); //updates value of the if existing, else adds
+
+console.log(map.clear()); //clears all
+console.log(map);
+
+
+//Math interface
+console.log(Math.random());
+Math.log(2);
